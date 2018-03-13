@@ -16,7 +16,7 @@
             <param-name>param1</param-name>
             <param-value>avalible in servlet init()</param-value>
         </init-param>
-        <load-on-startup>0</load-on-startup>
+        <!--<load-on-startup>0</load-on-startup>--><!--启动时就执行init()方法。-->
     </servlet>
     <servlet-mapping>
         <servlet-name>Hello</servlet-name>

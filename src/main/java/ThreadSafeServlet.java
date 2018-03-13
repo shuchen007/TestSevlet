@@ -17,15 +17,12 @@ public class ThreadSafeServlet extends HttpServlet implements SingleThreadModel 
 
     @Override
     public void init() throws ServletException {
-        boolean bool = pingLink();
-        // 取得Application对象
-        ServletContext application = this.getServletContext();
-        // 设置Application属性
-        application.setAttribute("bool", bool);
-
-        System.out.println(getInitParameter("param1"));
-        System.out.println(getServletContext().getInitParameter("param0"));
         super.init();
+        boolean bool = pingLink();
+        ServletContext application = getServletContext();
+        application.setAttribute("bool", bool);
+        System.out.println(getServletContext().getInitParameter("param0"));
+        System.out.println(getInitParameter("param1"));
         System.out.println("Servlet初始化");
     }
 
@@ -80,6 +77,8 @@ public class ThreadSafeServlet extends HttpServlet implements SingleThreadModel 
     @Override
     protected synchronized void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.printf("%s：%s[%s]\n", Thread.currentThread().getName(), i, format.format(new Date()));
+        System.out.println(getServletContext().getInitParameter("param0"));
+        System.out.println(getInitParameter("param1"));
         i++;
 //        try {
 //            Thread.sleep(5000);
@@ -87,9 +86,16 @@ public class ThreadSafeServlet extends HttpServlet implements SingleThreadModel 
 //            e.printStackTrace();
 //        }
         req.getSession().setAttribute("Title","DODO1");
+        // 取得Application对象
+        ServletContext application = this.getServletContext();
+        // 设置Application属性
+        application.setAttribute("pig3","003");
+        application.setAttribute("param0",application.getInitParameter("param0"));
+
         System.out.printf("%s：%s[%s]\n", Thread.currentThread().getName(), i, format.format(new Date()));
         resp.getWriter().println("<html><body><h1>" + i + "</h1></body></html>");
         System.out.println("收到get"+new Date());
+
 
     }
 
