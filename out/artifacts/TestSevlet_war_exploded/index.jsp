@@ -8,20 +8,36 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$param0$${initParam0}</title>
+    <title>${initParam.param0}</title>
   </head>
   <body>
-<%=session.getAttribute("Title")%><br>
-<%=application.getAttribute("param0") %><br/>
-<%=application.getAttribute("param1") %><br/>
-<%=application.getAttribute("bool") %><br/>
-<%=application.getAttribute("pig2") %><br/>
-<%=application.getAttribute("pig3") %><br/>
+  <%--获取application上下文，context-param参数。--%>
+  ${initParam.param0}<br>
+  <%=application.getInitParameter("param0") %><br/>
+  <%out.println("-----------");%>
+
+  <%--获取application对象--%>
+  ${applicationScope.app1}<br>
+  <%=application.getAttribute("app2") %><br/>
+  <%out.println("-----------");%>
+
+  <%--获取session对象--%>
+  ${sessionScope.ses1}<br>
+  <%=session.getAttribute("ses2") %><br/>
+  <%out.println("-----------");%>
+
+  <%--获取并设置request--%>
+  <% request.setAttribute("req1","REQ1");%><br/>
+
+  <%
+    int x= 1+3;
+    System.out.println("do000000"+x);
+  %>;
 </n>
   $END$
-  <a href = "HelloWorldServlet">get</a>
+  <a href = "dd">get</a>
   </n>
-  <form method="post" action="./HelloWorldServlet">
+  <form method="post" action="./dd">
     <input type="submit" value="提交1">
   </form>
 

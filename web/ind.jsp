@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>${initParam.param0}</title>
+    <title>${app1}</title>
   </head>
   <body>
   <%--获取application上下文，context-param参数。--%>
@@ -17,21 +17,24 @@
   <%out.println("-----------");%>
 
   <%--获取application对象--%>
-  ${applicationScope.app1}<br>
+  ${app1}<br>
   <%=application.getAttribute("app2") %><br/>
   <%out.println("-----------");%>
 
   <%--获取session对象--%>
-  ${sessionScope.ses1}<br>
+  ${ses1}<br>
   <%=session.getAttribute("ses2") %><br/>
   <%out.println("-----------");%>
 
   <%--获取并设置request--%>
-  <% request.setAttribute("req1","REQ1");%><br/>
+  <%=request.getAttribute("req1") %><br/>
+  <%=request.getAttribute("req2") %><br/>
+  ${requestScope.req2}<br/>
 
   <%
     int x= 1+3;
     System.out.println("do000000"+x);
+
   %>;
 </n>
   $END$

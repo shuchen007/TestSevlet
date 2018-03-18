@@ -2,6 +2,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +22,6 @@ public class ThreadSafeServlet extends HttpServlet implements SingleThreadModel 
         boolean bool = pingLink();
         ServletContext application = getServletContext();
         application.setAttribute("bool", bool);
-        System.out.println(getServletContext().getInitParameter("param0"));
-        System.out.println(getInitParameter("param1"));
         System.out.println("Servlet初始化");
     }
 
@@ -77,26 +76,33 @@ public class ThreadSafeServlet extends HttpServlet implements SingleThreadModel 
     @Override
     protected synchronized void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.printf("%s：%s[%s]\n", Thread.currentThread().getName(), i, format.format(new Date()));
-        System.out.println(getServletContext().getInitParameter("param0"));
-        System.out.println(getInitParameter("param1"));
+        System.out.println(getServletContext().getInitParameter("param1"));
+        System.out.println(getInitParameter("param0"));
         i++;
 //        try {
 //            Thread.sleep(5000);
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        req.getSession().setAttribute("Title","DODO1");
-        // 取得Application对象
+        // 设置和获取Application对象
         ServletContext application = this.getServletContext();
-        // 设置Application属性
-        application.setAttribute("pig3","003");
-        application.setAttribute("param0",application.getInitParameter("param0"));
+        application.setAttribute("app1","APP1");
+        application.setAttribute("app2",application.getAttribute("bool"));
+        // 设置和获取Session对象(获取servert参数）
+        HttpSession session = req.getSession();
+        session.setAttribute("ses1","SES1");
+        session.setAttribute("ses2",getInitParameter("param1"));
+//        设置或获取request参数
+        System.out.println(req.getAttribute("req1"));
+        req.setAttribute("req1",req.getAttribute("req1"));
+        req.setAttribute("req2","REQ2");
 
         System.out.printf("%s：%s[%s]\n", Thread.currentThread().getName(), i, format.format(new Date()));
         resp.getWriter().println("<html><body><h1>" + i + "</h1></body></html>");
         System.out.println("收到get"+new Date());
-
-
+//        测试跳转
+//        resp.sendRedirect("./ind.jsp");
+        req.getRequestDispatcher("./ind.jsp").forward(req,resp);
     }
 
     @Override

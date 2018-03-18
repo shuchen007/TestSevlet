@@ -20,6 +20,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Hello</servlet-name>
-        <url-pattern>/HelloWorldServlet</url-pattern><!--//创建Servlet拦截器。-->
+        <url-pattern>/dd</url-pattern><!--//创建Servlet拦截器。-->
     </servlet-mapping>
 </web-app>
